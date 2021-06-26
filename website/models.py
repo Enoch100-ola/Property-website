@@ -45,6 +45,10 @@ class Team(models.Model):
 
     class Meta():
         verbose_name_plural = 'Team'
+    @property
+    def get_team_img(self):
+        if self.profile:
+            return self.profile.url
 
 class Property(models.Model):
     RENT = 'Rent'
@@ -56,7 +60,7 @@ class Property(models.Model):
         (CHOOSE, 'Choose An Offer Type'),
     ]
     property_name = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True)
     property_img1 = models.ImageField(blank=True, null=True, verbose_name='Property Image 1', upload_to='uploads/properties')
     property_img2 = models.ImageField(blank=True, null=True, verbose_name='Property Image 2', upload_to='uploads/properties')
     property_img3 = models.ImageField(
@@ -64,7 +68,7 @@ class Property(models.Model):
     prize = models.DecimalField(max_digits=9, decimal_places=2)
     property_address = models.TextField(blank=True, null=True)
     property_description = models.TextField(blank=True, null=True)
-    rooms = models.PositiveIntegerField()
+    rooms = models.PositiveIntegerField(blank=True, null=True)
     offer_type = models.CharField(max_length=10, choices=OFFER_TYPE, default=CHOOSE)
     location_id = models.ForeignKey(Location, related_name='property_location', on_delete=models.CASCADE)
     agent_id = models.ForeignKey(User, related_name='property_agent', on_delete=models.CASCADE)
@@ -99,7 +103,7 @@ class Property(models.Model):
         verbose_name_plural = 'Property'
 
     def get_property_url(self):
-        return reverse("public_view:property_details", kwargs={
+        return reverse("website:property_detail", kwargs={
             'slug': self.slug
         })
 
@@ -114,6 +118,7 @@ class Property(models.Model):
 class ContactAgent(models.Model):
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
+    email = models.EmailField()
     agent_id = models.ForeignKey(User, on_delete=models.CASCADE)
     location_id = models.ForeignKey(Location, on_delete=models.CASCADE)
 
