@@ -10,12 +10,13 @@ urlpatterns = [
     path('property-list/', views.property_list, name='property_list'),
     path('property-rent/', views.rent, name='rent'),
     path('property-buy/', views.buy, name='buy'),
-    path('<slug:slug>/', views.property_detail, name='property_detail'),
     path('request/', views.request, name='request'),
     path('login-page/', views.login_view, name='login_view'),
+    path('logout-page/', views.logout_view, name='logout_view'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('register-page/', views.register, name='register'),
     path('confirm-logout/', views.confirm_logout, name='confirm_logout'),
-    path('add-location/', views.add_location, name='add_location'),
-    path('add-property/', views.add_property, name='add_property'),
+    path('<slug:slug>/', views.property_detail, name='property_detail'),
 ]
+    
+   

@@ -57,7 +57,48 @@
                             <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#"
                                     class="site-menu-toggle js-menu-toggle text-white"><span
                                         class="icon-menu h3"></span></a></div>
+                            {% if request.user.is_authenticated %}
+                            <ul class="site-menu js-clone-nav d-none d-lg-block">
+                                {% url 'home' as Home %}
+                                {% url 'website:about' as About %}
+                                {% url 'website:agents' as Agent %}
+                                {% url 'website:request' as Request %}
+                               
+                                <li {% if request.path == Home %} class="active" {% endif %}>
+                                    <a href="{% url 'home' %}">Home</a>
+                                </li>
+                                <li {% if request.path == About %} class="active" {% endif %}><a href="{% url 'website:about' %}">About</a></li>
+                                <li class="has-children">
+                                    <a href="properties.html">Offer Type</a>
+                                    <ul class="dropdown arrow-top">
+                                        <li><a href="{% url 'website:rent' %}">For Rent</a></li>
+                                        <li><a href="{% url 'website:buy' %}">For Sale</a></li>
+                                    </ul>
+                                </li>
+                                <li class="has-children">
+                                    <a href="#">Property Type</a>
+                                    <ul class="dropdown arrow-top">
+                                        <li><a href="#">Condo</a></li>
+                                        <li><a href="#">Duplex</a></li>
+                                        <li><a href="#">Bungalow</a></li>
+                                        <li><a href="#">Mini Flat</a></li>
+                                        <li><a href="#">Flat</a></li>
+                                    </ul>
+                                </li>
+                                <li class="has-children">
+                                    <a href="#">{{ request.user.username }}</a>
+                                    <ul class="dropdown arrow-top">
+                                        <li><a href="{% url 'website:logout_view' %}">Logout</a></li>
+                                    </ul>
+                                
+                                </li>
+                                <li class="has-children">
+                                    <a href="{% url 'website:dashboard' %}">Dashboard</a>
+                                
+                                </li>
 
+                            </ul>
+                            {% else %}
                             <ul class="site-menu js-clone-nav d-none d-lg-block">
                                 {% url 'home' as Home %}
                                 {% url 'website:about' as About %}
@@ -95,6 +136,7 @@
                                     </ul>
                                 </li>
                             </ul>
+                            {% endif %}
                         </nav>
                     </div>
 

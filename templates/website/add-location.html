@@ -22,28 +22,15 @@ Add Location
   {% include 'website/admin-sidebar.html' %}
 
     <div class="col-md-9 col-lg-9 py-5 bg-light">
-      <form action="#" class="p-5 bg-white border">
-
-        <div class="row form-group">
-          <div class="col-md-12 mb-3 mb-md-0">
-            <label class="font-weight-bold" for="fullname">Location Name</label>
-            <input type="text" id="fullname" class="form-control" placeholder="Full Name">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col-md-12 mb-3 mb-md-0">
-            <label class="font-weight-bold" for="fullname">Location Description</label>
-            <textarea class="form-control"></textarea>
-          </div>
-        </div>
+      {% if messages %}
+        {% for mes in messages %}
+          <div class="alert alert-success">{{ mes }}</div>  
+        {% endfor %}
+      {% endif %}
+      <form method="POST" class="p-5 bg-white border">
+        {{ loc }}
         <input type="submit" class="btn btn-primary" value="Add Location">
-
-
-
-
-
-
-
+        {% csrf_token %}
       </form>
 
     </div>
