@@ -22,14 +22,7 @@ Add Property
     <div class="col-md-9 col-lg-9 py-5 bg-light">
       <form method="POST" class="p-5 bg-white border" enctype="multipart/form-data">
 
-          {% if messages %}
-            {% for mes in messages %}
-              <div class="alert alert-success"> {{ mes }}</div>
-            {% endfor %}
-          {% endif %}
-          {{ add }}
-          {% csrf_token %}
-
+        {% include 'website/form-snippet.html' with form=property %}
         <div class="row form-group">
           <div class="col-md-12">
             <input type="submit" value="Send Message" class="btn btn-primary  py-2 px-4 rounded-0">

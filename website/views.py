@@ -1,3 +1,5 @@
+import re
+from django.conf.urls import url
 from django.shortcuts import render, redirect
 from website.models import *
 from django.core.exceptions import ObjectDoesNotExist
@@ -8,8 +10,12 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
 
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 
 from website.forms import *
+
+
 
 # Create your views here.
 
@@ -76,6 +82,19 @@ def property_detail(request, slug):
     return render(request, 'website/404.html')
     
 
+def add_property(request):
+    if request.method=='POST':
+        property_form = PropertyForm(request.POST, request.FILES)
+        if property_form.is_valid():
+            file_form = property_form.save(commit=False)
+            file_form.agent_id = request.user
+            file_form.save()
+            messages.success(request, 'Property added')
+    else:
+        property_form = PropertyForm()
+    return render(request, 'website/add-property.html', {'property':property_form})
+
+
 
 def rent(request):
     rent = Property.objects.filter(offer_type='Rent').order_by('-created')
@@ -90,11 +109,38 @@ def request(request):
     return render(request, 'website/request.html')
 
 
+@login_required(login_url='/pages/login-page/')
 def dashboard(request):
     return render(request, 'website/dashboard.html')
 
 def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('website:dashboard')
+        else:
+            messages.error(request, 'Username and password do not martch')
+
     return render(request, 'website/login.html')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('website:login_view')
+
+def add_location(request):
+    if request.method == 'POST':
+        location_form = AddLocation(request.POST)
+        if location_form.is_valid():
+            location_form.save()
+            messages.success(request, 'Location Added Successfully')
+    else:
+        location_form = AddLocation()
+    return render(request, 'website/add-location.html', {'loc':location_form})
 
 
 
@@ -103,11 +149,20 @@ def confirm_logout(request):
     return render(request, 'website/confirm-logout.html')
 
 
-
-
 def register(request):
-    return render(request, 'website/register.html')
+    if request.method == 'POST':
+        register = RegisterForm(request.POST)
+        if register.is_valid():
+            username = register.cleaned_data.get('username')
+            register.save()
+            messages.success(request, f'This user with this username {username} is registered')
+    else:
+        register = RegisterForm()
+    return render(request, 'website/register.html', {'reg':register})
 
+def view_properties_by_agent(request):
+    view_prop = Property.objects.filter(agent_id=request.user)
+    return render(request, 'website/view-agent-properties.html', {'view':view_prop})
 
 
 

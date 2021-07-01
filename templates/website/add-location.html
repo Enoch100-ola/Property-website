@@ -22,15 +22,12 @@ Add Location
   {% include 'website/admin-sidebar.html' %}
 
     <div class="col-md-9 col-lg-9 py-5 bg-light">
-      {% if messages %}
-        {% for mes in messages %}
-          <div class="alert alert-success">{{ mes }}</div>  
-        {% endfor %}
-      {% endif %}
+     
+
       <form method="POST" class="p-5 bg-white border">
-        {{ loc }}
+        {% include 'website/form-snippet.html' with form=loc %}
         <input type="submit" class="btn btn-primary" value="Add Location">
-        {% csrf_token %}
+       
       </form>
 
     </div>

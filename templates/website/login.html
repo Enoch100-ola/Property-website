@@ -27,13 +27,11 @@ Login
 
 
         <form method="POST" class="p-5 bg-white border">
-
-          {% if messages %}
-            {% for mes in messages %}
-              <div class="alert alert-danger">{{ mes }}</div>
-            {% endfor %}
-          {% endif %}
-
+            {% if messages %}
+              {% for mes in messages %}
+                <div class="alert alert-danger">{{ mes }}</div>
+              {% endfor %}
+            {% endif %}
           <div class="row form-group">
             <div class="col-md-12 mb-3 mb-md-0">
               <label class="font-weight-bold" for="username">Username</label>
