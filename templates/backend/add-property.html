@@ -1,0 +1,32 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+
+{% block title %}
+Show All Properties
+{% endblock %}
+
+
+{% block content %}
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="#">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item active">My Dashboard</li>
+    </ol>
+    <!-- Icon Cards-->
+   
+   <div class="row">
+       <div class="col-sm-12">
+        <form method="POST">
+            {% include 'website/form-snippet.html' with form=property %}
+            <input type="submit" class="btn btn-primary" value="Add Property">
+        </form>
+       </div>
+   </div>
+  </div>
+  <!-- /.container-fluid-->
+</div>
+{% endblock %}

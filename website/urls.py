@@ -16,11 +16,17 @@ urlpatterns = [
     path('register-page/', views.register, name='register'),
     path('confirm-logout/', views.confirm_logout, name='confirm_logout'),
     path('logout-page/', views.logout_view, name='logout_view'),
-    path('add-location/', views.add_location, name='add_location'),
+#     path('add-location/', views.add_location, name='add_location'),
     path('add-property/', views.add_property, name='add_property'),
     path('view-properties/', views.view_properties_by_agent,
          name='view_properties_by_agent'),
+    path('filter-data/', views.filter_data,
+         name='filter_data'),
+    path('edit-property/<int:prop_id>/', views.edit_property, name='edit_property'),
+    path('delete-property/<int:prop_id>/',
+         views.delete_property, name='delete_property'),
     path('<slug:slug>/', views.property_detail, name='property_detail'),
+   
 ]
     
    

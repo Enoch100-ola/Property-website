@@ -59,10 +59,10 @@
             </a>
             <ul class="sidenav-second-level collapse" id="property">
                 <li>
-                    <a href="#">Add Property</a>
+                    <a href="{% url 'backend:add_property' %}">Add Property</a>
                 </li>
                 <li>
-                    <a href="#">View Property</a>
+                    <a href="{% url 'backend:show_properties' %}">View Property</a>
                 </li>
             </ul>
         </li>
@@ -74,7 +74,7 @@
             </a>
             <ul class="sidenav-second-level collapse" id="location">
                 <li>
-                    <a href="#">Add Location</a>
+                    <a href="{% url 'backend:add_location' %}">Add Location</a>
                 </li>
                 <li>
                     <a href="#">View Locations</a>
@@ -98,6 +98,9 @@
 
         </ul>
         <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a href="" class="nav-link">{{ request.user.first_name }}</a>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
@@ -232,7 +235,7 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a class="btn btn-primary" href="{% url 'website:logout_view' %}">Logout</a>
           </div>
         </div>
       </div>
