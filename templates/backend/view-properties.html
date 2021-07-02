@@ -1,0 +1,59 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+
+{% block title %}
+Show All Properties
+{% endblock %}
+
+
+{% block content %}
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="#">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item active">My Dashboard</li>
+    </ol>
+    <!-- Icon Cards-->
+   
+   <div class="row">
+       <div class="col-sm-12">
+        <table class="table">
+            <tr>
+                <th>S/N</th>
+                <th>Property Name</th>
+                <th>Location</th>
+                <th>Property Type</th>
+                <th>Agent</th>
+                <th>Prize</th>
+                <th>Image</th>
+                <th colspan="2">Action</th>
+            </tr>
+        
+            {% if show %}
+            {% for v in show %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ v.property_name }}</td>
+                <td>{{ v.location_id.name }}</td>
+                <td>{{ v.property_type_id.name }}</td>
+                <td>{{ v.agent_id.username }}</td>
+                <td>{{ v.prize }}</td>
+                <td>
+                    <img src="{{ v.img_url1 }}" width="100" height="100" alt="">
+                </td>
+                <td><a href="{{ v.id }}">Edit</a></td>
+                <td><a href="{ v.id }">Delete</a></td>
+            </tr>
+        
+            {% endfor %}
+            {% endif %}
+        </table>
+       </div>
+   </div>
+  </div>
+  <!-- /.container-fluid-->
+</div>
+{% endblock %}
